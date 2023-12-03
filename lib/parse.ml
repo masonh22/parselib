@@ -92,11 +92,8 @@ let rec to_str : type t. t format -> t -> string =
     match delim with
     | Delim s -> str ^ s
   in
-  let fold_func fmt delim (acc, first) elt =
-    if first then
-      (to_str fmt elt, false)
-    else
-      (add_delim delim acc ^ to_str fmt elt, false)
+  let get_delim = function
+    | Delim s -> s
   in
 
   fun fmt data ->
@@ -111,9 +108,13 @@ let rec to_str : type t. t format -> t -> string =
       | Some d -> to_str fmt' d
     end
   | FList (delim, fmt'), lst ->
-     List.fold_left (fold_func fmt' delim) ("", true) lst |> fst
+     String.concat (get_delim delim) (List.map (to_str fmt') lst)
   | FSeq (delim, fmt'), seq ->
-     Seq.fold_left (fold_func fmt' delim) ("", true) seq |> fst
+     Seq.fold_lefti
+       (fun acc i elt ->
+         let str' = to_str fmt' elt in
+         if i = 0 then str' else add_delim delim acc ^ str')
+       "" seq
   | FPair (fmt1, delim, fmt2), (d1, d2) ->
      let s1 = to_str fmt1 d1 in
      let s2 = to_str fmt2 d2 in
