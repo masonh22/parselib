@@ -21,6 +21,8 @@ val (#@) : 'a format -> string -> 'b format -> ('a * 'b) format
 
 (* generic parse error *)
 exception Parse_error of string
+(* couldn't find delimiter *)
+exception No_delim of string
 
 (** [parse_str fmt str] is the string [str] parsed into format [fmt].
     raises [Parse_error] if [str] cannot be parsed with with format [fmt]. *)
