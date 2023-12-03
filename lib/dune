@@ -1,0 +1,9 @@
+(library
+ (public_name parselib)
+ (name parselib)
+ (libraries str)
+ (instrumentation (backend bisect_ppx)))
+
+(env
+ (dev
+   (flags (:standard -w -27-32))))

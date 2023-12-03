@@ -1,0 +1,6 @@
+(executable
+ (name parsetop)
+ (public_name parsetop)
+ (libraries utop str parselib)
+ (link_flags (-linkall))
+ (modes byte))
