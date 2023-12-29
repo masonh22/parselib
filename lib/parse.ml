@@ -35,11 +35,11 @@ let rec parse_str : type t. t format -> string -> t =
     match delim with
     | Delim s -> begin
         let r = Str.regexp s in
-        let len = String.length s in
         let pos =
           try Str.search_forward r str 0 with
           | Not_found -> raise (No_delim ("split_delim(" ^ s ^ "): " ^ str))
         in
+        let len = String.length (Str.matched_string str) in
         split_on str pos len
       end
   in
