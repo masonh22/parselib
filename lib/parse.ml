@@ -123,6 +123,13 @@ let rec to_str : type t. t format -> t -> string =
   | FDropF _, _ -> failwith "FDropF to_str unimplemented"
   | FDropB _, _ -> failwith "FDropB to_str unimplemented"
 
+(** to_file *)
+let to_file fmt data file =
+  let out = open_out file in
+  (* TODO optimize this *)
+  output_string out (to_str fmt data);
+  close_out out
+
 (** list_of_seq *)
 let list_of_seq seq =
   Seq.fold_left (fun lst elt -> elt :: lst) [] seq |> List.rev

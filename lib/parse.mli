@@ -32,5 +32,9 @@ val parse_str : 'a format -> string -> 'a
  *  delimiters for lists, sequences, and pairs. *)
 val to_str : 'a format -> 'a -> string
 
+(** [to_file fmt data file] writes [data] in its string representation to the
+ *  file named [file]. *)
+val to_file : 'a format -> 'a -> string -> unit
+
 (** [list_of_seq seq] is a list made up of elements of [seq] *)
 val list_of_seq : 'a Seq.t -> 'a list
