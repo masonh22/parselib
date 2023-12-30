@@ -71,9 +71,34 @@ let of_fmt fmt str =
     ignore (String.fold_left fold_fun (0, ' ', str ^ " ") (fmt ^ " "));
   date
 
-let to_fmt _ { year; month; day } =
-  (* TODO ignores the fmt arg *)
-  Printf.sprintf "%04d-%02d-%02d" year month day
+(* TODO make {to,of}_fmt better *)
+let to_fmt fmt { year; month; day } =
+  (* extract substrings from str in accumulator when we hit a format char (i.e.
+     not YMD) *)
+  let fold_fun acc fmt_char =
+    match fmt_char, acc with
+    | 'Y', (n, _, str) -> (n + 1, 'Y', str)
+    | 'M', (n, _, str) -> (n + 1, 'M', str)
+    | 'D', (n, _, str) -> (n + 1, 'D', str)
+    | c, (n, p, str) ->
+       let delim =
+         (* our special delim to let us know we're at the end of the string *)
+         if Char.code c = 7 then "" else String.make 1 c in
+       let str' =
+         match p, n with
+         | 'Y', 2 ->
+            Printf.sprintf "%02d" (year mod 100) ^ delim
+         | 'Y', 4 ->
+            Printf.sprintf "%04d" year ^ delim
+         | 'M', 2 -> Printf.sprintf "%02d" month ^ delim
+         | 'D', 2 -> Printf.sprintf "%02d" day ^ delim
+         | _ -> failwith "TODO bad date fmt (1)"
+       in
+       (0, ' ', str ^ str')
+  in
+  let (_, _, str) =
+    String.fold_left fold_fun (0, ' ', "") (fmt ^ String.make 1 (Char.chr 7)) in
+  str
 
 let cmp { year=y1; month=m1; day=d1 } { year=y2; month=m2; day=d2 } =
   if y1 < y2 then -1

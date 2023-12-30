@@ -4,6 +4,9 @@ open Parselib.Date
 let equality_test name x1 x2 =
   name >:: (fun _ -> assert_equal x1 x2)
 
+let string_test name s1 s2 =
+  name >:: (fun _ -> assert_equal s1 s2 ~printer:Fun.id)
+
 let date_equality name d1 d2 =
   name >:: (fun _ -> assert_equal d1 d2 ~printer:to_string)
 
@@ -19,6 +22,8 @@ let df3 = of_fmt "DD+MM+YYYY" "22+12+2022"
 
 let ds1 = "2022-02-01"
 let ds2 = "22-02-01"
+let ds3 = "02-22-01"
+let ds4 = "2022-02"
 
 let tests = "Date test suite" >::: [
       equality_test "equal" 0 (cmp d1 d1);
@@ -35,6 +40,8 @@ let tests = "Date test suite" >::: [
       equality_test "month" 12 (get_month d1);
       equality_test "year" 2222 (get_year d5);
       equality_test "to_string" ds1 (of_string ds1 |> to_string);
-      equality_test "to_fmt" ds1 (of_string ds1 |> to_fmt "YYYY-MM-DD");
-      (* equality_test "to_fmt 2" ds2 (of_string ds1 |> to_fmt "YY-MM-DD"); *)
+      string_test "to_fmt" ds1 (of_string ds1 |> to_fmt "YYYY-MM-DD");
+      string_test "to_fmt 2" ds2 (of_string ds1 |> to_fmt "YY-MM-DD");
+      string_test "to_fmt 3" ds3 (of_string ds1 |> to_fmt "MM-YY-DD");
+      string_test "to_fmt 4" ds4 (of_string ds1 |> to_fmt "YYYY-MM");
     ]
