@@ -71,7 +71,9 @@ let of_fmt fmt str =
     ignore (String.fold_left fold_fun (0, ' ', str ^ " ") (fmt ^ " "));
   date
 
-let to_fmt fmt { year; month; day } = failwith "TODO to_fmt unimplemented"
+let to_fmt _ { year; month; day } =
+  (* TODO ignores the fmt arg *)
+  Printf.sprintf "%04d-%02d-%02d" year month day
 
 let cmp { year=y1; month=m1; day=d1 } { year=y2; month=m2; day=d2 } =
   if y1 < y2 then -1

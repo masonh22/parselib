@@ -35,5 +35,6 @@ let tests = "Date test suite" >::: [
       equality_test "month" 12 (get_month d1);
       equality_test "year" 2222 (get_year d5);
       equality_test "to_string" ds1 (of_string ds1 |> to_string);
-      (* equality_test "to_fmt" ds2 (of_string ds1 |> to_fmt "YY-MM-DD"); *)
+      equality_test "to_fmt" ds1 (of_string ds1 |> to_fmt "YYYY-MM-DD");
+      (* equality_test "to_fmt 2" ds2 (of_string ds1 |> to_fmt "YY-MM-DD"); *)
     ]
