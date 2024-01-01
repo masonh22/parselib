@@ -16,7 +16,7 @@ let parsed1 = ("hi there", "val2", "1234.56", 123456, ["e1";"e2";"e3";"e4"], "en
 let unfold1 (s1, (s2, (s3, (i4, (l5, s6))))) = (s1, s2, s3, i4, l5, s6)
 let fold1 (s1, s2, s3, i4, l5, s6) = (s1, (s2, (s3, (i4, (l5, s6)))))
 
-let fmt2 = FString #> " " (FString @> FString @> FString @> FInt @> (FList (Delim ";", FString)) @> FString)
+let fmt2 = (FString ^> " ") (FString @> FString @> FString @> FInt @> (FList (Delim ";", FString)) @> FString)
 let parsed2 = ("hi", "there", "val2", "1234.56", 123456, ["e1";"e2";"e3";"e4"], "end")
 let unfold2 (s1, (s2, (s3, (s4, (i5, (l6, s7)))))) = (s1, s2, s3, s4, i5, l6, s7)
 let fold2 (s1, s2, s3, s4, i5, l6, s7) = (s1, (s2, (s3, (s4, (i5, (l6, s7))))))

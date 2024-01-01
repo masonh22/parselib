@@ -17,7 +17,7 @@ type _ format =
 
 (* syntactic sugar for writing formats *)
 val (@>) : 'a format -> 'b format -> ('a * 'b) format (* comma separated *)
-val (#>) : 'a format -> string -> 'b format -> ('a * 'b) format
+val (^>) : 'a format -> string -> 'b format -> ('a * 'b) format
 
 (* generic parse error *)
 exception Parse_error of string
