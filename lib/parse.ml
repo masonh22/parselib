@@ -15,7 +15,7 @@ type _ format =
   | FDropB : 'a format * delim * _ format -> 'a format
 
 let (@>) fm1 fm2 = FPair (fm1, Delim ",", fm2)
-let (#@) fmt str = fun fmt' -> FPair (fmt, Delim str, fmt')
+let (#>) fmt str fmt' = FPair (fmt, Delim str, fmt')
 
 exception Parse_error of string
 exception No_delim of string
