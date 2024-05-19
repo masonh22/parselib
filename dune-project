@@ -19,7 +19,7 @@
  (name parselib)
  (synopsis "Parse formatted text files")
  (description "A longer description")
- (depends ocaml dune)
+ (depends ocaml dune utop)
  (tags
   (topics "to describe" your project)))
 
